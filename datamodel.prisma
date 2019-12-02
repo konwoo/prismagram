@@ -1,5 +1,6 @@
 type User {
   id: ID! @id
+  avatar: String
   username: String! @unique
   email: String! @unique
   firstName: String! @default(value:"")
@@ -8,45 +9,57 @@ type User {
   loginSecret: String
   followers: [User!]! @relation(name: "FollowRelation")
   followings: [User!]! @relation(name: "FollowRelation")
-  posts: [Post!]!
-  likes: [Like!]!
-  comments: [Comment!]!
+  posts: [Post!]! @realation(name: "PostsOfUser", onDelete: CASACADE)
+  likes: [Like!]! @realation(name: "LikesOfUser", onDelete: CASACADE)
+  comments: [Comment!]! @realation(name: "CommentsOfUser", onDelete: CASACADE)
   rooms: [Room!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Post {
   id: ID! @id
   location: String
-  user: User!
-  caption: String!
+  user: User! @realation(name: "PostsOfUser")
+  caption: String! @realation(name: "FilesOfPost", onDelete: CASACADE)
   files: [File!]!  @realation(name: "FilesOfPost", onDelete: CASACADE)
   likes: [Like!]!  @realation(name: "LikeOfPost", onDelete: CASACADE)
-  comments: [Comment!]!
+  comments: [Comment!]! @realation(name: "CommentsOfPost", onDelete: CASACADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Like {
   id: ID! @id
-  user: User
+  user: User @realation(name: "LikesOfUser")
   post: Post @realation(name: "LikeOfPost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Comment {
   id: ID! @id
   text: String!
-  user: User!
-  post: Post!
+  user: User @realation(name: "CommentsOfUser")
+  post: Post @realation(name: "CommentsOfPost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type File {
   id: ID! @id
   url: String!
   post: Post @realation(name: "FilesOfPost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Room {
   id: ID! @id
   participants: [User!]!
   messages: [Message!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Message {
@@ -55,4 +68,6 @@ type Message {
   from: User! @relation(name: "From")
   to: User! @relation(name:"To")
   room: Room!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
