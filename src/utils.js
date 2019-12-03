@@ -9,7 +9,7 @@ export const generatorSecret = () => {
     return `${adjectives[randomNumber]} ${nouns[randomNumber]}`;
 };
 
-export const endMail = (email) => {
+export const sendMail = (email) => {
     const options = {
         auth: {
             api_user: process.env.SENDGRID_USERNAME,
