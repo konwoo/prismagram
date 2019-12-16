@@ -10,8 +10,11 @@ type User {
   itSelf: Boolean!
   bio: String
   followers: [User!]!
+  followingCount: Int!
   followings: [User!]!
+  followerCount: Int!
   posts: [Post!]!
+  postsCount: Int!
   likes: [Like!]!
   comments: [Comment!]!
   rooms: [Room!]!
@@ -30,6 +33,7 @@ type Post {
   comments: [Comment!]!
   isLiked: Boolean!
   likeCount: Int!
+  commentCount: Int!
   createdAt: String
   updatedAt: String
 }

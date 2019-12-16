@@ -37,7 +37,7 @@ export default {
                                 id: postId
                             }
                         }
-                    })
+                    });
                 }
                 return true;
             } catch (error) {
